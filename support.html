@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support — DarkDeepWeb</title>
+<meta name="description" content="Help for DarkDeepWeb: connecting to Tor, searching, onion addresses, security levels, new identity, and the on-device AI.">
+<style>
+  :root{
+    --bg:#1C1B22; --surface:#2B2A33; --elev:#36353F; --stroke:#42414D;
+    --text:#FBFBFE; --text2:#B6B3C2; --text3:#8A8796;
+    --accent:#A87BE0; --accent2:#7D4698; --ok:#7FC240;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#FFFFFF; --surface:#F6F3FA; --elev:#FFFFFF; --stroke:#E5E0EE;
+      --text:#1C1B22; --text2:#554E68; --text3:#857F94;
+      --accent:#7D4698; --accent2:#59316B; --ok:#4E8B22;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:56px 22px 96px}
+  .mark{font-weight:800;font-size:15px;letter-spacing:-.2px}
+  .mark span{background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  h1{font-size:34px;line-height:1.15;letter-spacing:-.8px;margin:26px 0 10px;font-weight:800}
+  .lede{color:var(--text2);font-size:17px;margin:0 0 34px}
+  h2{font-size:19px;margin:38px 0 12px;font-weight:700;letter-spacing:-.2px}
+  p{margin:0 0 14px;color:var(--text2)}
+  p strong{color:var(--text)}
+  ul{margin:0 0 16px;padding-left:20px;color:var(--text2)} li{margin:0 0 8px}
+  details{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;
+    padding:14px 18px;margin:0 0 10px}
+  details[open]{border-color:color-mix(in srgb,var(--accent) 34%,var(--stroke))}
+  summary{cursor:pointer;font-weight:650;color:var(--text);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";float:right;color:var(--text3);font-weight:700}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 2px}
+  .contact{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;
+    padding:20px 22px;margin:34px 0 0}
+  a{color:var(--accent);text-decoration:none;
+    border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+  a:hover{border-bottom-color:var(--accent)}
+  footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--stroke);
+    color:var(--text3);font-size:13px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;
+    background:var(--elev);border:1px solid var(--stroke);border-radius:6px;padding:1px 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mark">Dark<span>Deep</span>Web</div>
+
+  <h1>Support</h1>
+  <p class="lede">A browser that reaches the web only through Tor and reads it with an AI running on your phone. Here is how each part works, and what to try when something does not.</p>
+
+  <h2>Connecting to Tor</h2>
+
+  <details>
+    <summary>Why is the first connection so slow?</summary>
+    <p>Before Tor can build a single route it has to download the public list of relays — a directory covering roughly nine thousand computers. On a brand-new install none of that is cached, so the first connection commonly takes <strong>two to six minutes</strong>. It is not the app hanging; the progress bar is reporting Tor's own state.</p>
+    <p>Every connection after that reuses the cached directory and takes <strong>well under a minute</strong>. Desktop Tor Browser behaves the same way for the same reason.</p>
+  </details>
+
+  <details>
+    <summary>Can I use the browser while it is connecting?</summary>
+    <p>No, and that is deliberate. Nothing in the app can reach the network before Tor is carrying traffic — there is no path that would quietly load a page over your ordinary connection instead. The browser appears once circuits are up.</p>
+  </details>
+
+  <details>
+    <summary>Cancel and Connect</summary>
+    <p>Cancel stops the connection attempt properly: Tor stays running with its network switched off, so nothing can leave the device. Connect resumes from where it stopped rather than starting cold, so it is much quicker the second time.</p>
+    <p>If you would rather the app waited for you instead of connecting on launch, turn off <strong>Connect automatically</strong> on that screen.</p>
+  </details>
+
+  <details>
+    <summary>It never finishes connecting</summary>
+    <p>Some networks block Tor outright — this happens on certain corporate, school and national networks. Try a different network or a mobile connection. Tap <strong>Tor logs</strong> on the connect screen to see exactly what Tor is reporting; that log is the fastest thing to send us if you need help.</p>
+    <p>This version does not include bridges or pluggable transports, so it cannot get around a network that blocks Tor deliberately.</p>
+  </details>
+
+  <h2>Searching</h2>
+
+  <details>
+    <summary>Which search engines can I use?</summary>
+    <p><strong>Onion Search</strong> is the default: it asks Ahmia and DuckDuckGo Onion together and merges the two, so the search never leaves the Tor network and still always comes back with something. <strong>Ahmia</strong> on its own searches onion services, which is how you find a <code>.onion</code> address in the first place. <strong>DuckDuckGo Onion</strong> is DuckDuckGo's index reached as an onion service. <strong>DuckDuckGo</strong> is the ordinary one — it answers Tor exit relays without challenging them. <strong>All</strong> merges DuckDuckGo and Ahmia.</p>
+    <p>Google, Bing, Brave and Startpage are absent on purpose: all of them answer a Tor exit relay with a challenge page rather than results.</p>
+  </details>
+
+  <details>
+    <summary>My Ahmia search came back with nothing. What should I use?</summary>
+    <p><strong>Onion Search.</strong> An onion index covers tens of thousands of sites rather than billions of pages, so a narrow query can genuinely match nothing there. Onion Search asks Ahmia first and DuckDuckGo's onion service second, and shows both — the onion results when they exist, and an ordinary answer when they do not. Neither request leaves the Tor network.</p>
+    <p>It also helps to search the way you would an index this size: two or three distinctive words rather than a full sentence.</p>
+  </details>
+
+  <details>
+    <summary>Can I use a different search engine?</summary>
+    <p>Yes. Open <strong>Settings → Search engine → Custom</strong>, paste the address of any engine's results page with <code>%s</code> where your words go, and tap <strong>Use this engine</strong>. Clearnet or onion, either works. A few addresses that are known to work are listed on that screen — tap one to fill it in.</p>
+    <p><strong>Test engine</strong> on the same screen loads the page over Tor and tells you how many results it could read, so you know before you commit.</p>
+  </details>
+
+  <details>
+    <summary>Can I add my own search engine?</summary>
+    <p>Yes. Settings → Search engine → Custom. Open your engine in any browser, search for the word <em>test</em>, copy the address of the results page, and paste it in — replacing <em>test</em> with <code>%s</code>. Onion addresses are accepted, including <code>http://</code> ones. There is a Test button that runs a real search and tells you how many results it could read before you commit to it.</p>
+  </details>
+
+  <details>
+    <summary>The tabs — Web, News, Forums, Books</summary>
+    <p>These narrow your chosen engine to the right kind of site using search operators. If a narrow search finds nothing, the app widens it automatically rather than showing an empty page. Images and video tabs are not offered: the services behind them refuse Tor exit relays, so they would only ever be empty.</p>
+  </details>
+
+  <details>
+    <summary>Searching is slower than I expect</summary>
+    <p>Every query travels through three relays and back. A few seconds is normal. Ahmia is slower still — its results page is large and it takes two page loads to reach, so give it up to a minute. Onion Search queries two engines one after the other, so allow a little longer again; results from the first appear while the second is still loading.</p>
+  </details>
+
+  <h2>Onion addresses</h2>
+
+  <details>
+    <summary>What is the onion symbol in the address bar?</summary>
+    <p>It means you are on an onion service — a site reachable only inside the Tor network. There is no exit relay involved at all, and the connection is encrypted and authenticated to the service's own key. That is why an onion address shows the onion mark rather than a padlock, even on <code>http://</code>.</p>
+  </details>
+
+  <details>
+    <summary>Why does HTTPS-Only not apply to onion sites?</summary>
+    <p>Because it would be pointless and would break them. An onion connection is already end-to-end encrypted and verified against the address itself, with no certificate authority in the picture — which is exactly why most onion services serve plain HTTP.</p>
+  </details>
+
+  <h2>Security and privacy controls</h2>
+
+  <details>
+    <summary>Security level — Standard, Safer, Safest</summary>
+    <p><strong>Standard</strong> lets every site run as built. <strong>Safer</strong> switches JavaScript off on unencrypted <code>http://</code> sites and blocks web fonts and autoplaying media everywhere. <strong>Safest</strong> switches JavaScript off everywhere, including onion services, and blocks inline SVG as well.</p>
+    <p>The higher levels break more sites. That is the trade they exist to make. A change applies to the next page you open; a page already on screen keeps the rules it loaded with.</p>
+  </details>
+
+  <details>
+    <summary>HTTPS-Only mode</summary>
+    <p>On by default. An <code>http://</code> address is upgraded to <code>https://</code> before the request goes out. If the site has no HTTPS at all, the browser stops and asks rather than sending anything in the clear — where the exit relay, and everyone between it and the site, could read and change it. Continuing writes a per-site exception you can see and revoke in Site settings.</p>
+  </details>
+
+  <details>
+    <summary>New circuit vs New identity</summary>
+    <p><strong>New circuit</strong> changes the route only. Same cookies, same session, same history — a site that knew who you were still does. Use it when a route is slow or an exit relay is being blocked.</p>
+    <p><strong>New identity</strong> changes everything: it closes every circuit and deletes cookies, caches, history, site settings and the Tor log, then returns you to a clean home screen. Anything you were signed in to, you are signed out of.</p>
+    <p>Both are in the Tor connection screen — tap the status pill at the top of the home screen, or the address bar on any page.</p>
+  </details>
+
+  <details>
+    <summary>Deleting my data</summary>
+    <p>Settings → Data → Delete browsing data, where you choose what goes. Worth knowing: cookies, caches and site storage are never written to disk in the first place — they live in memory and disappear when the app closes. That screen is for clearing them <em>before</em> then.</p>
+  </details>
+
+  <details>
+    <summary>Notifications</summary>
+    <p>Websites cannot send you notifications in this browser — the engine has no support for Web Push, so there is nothing to grant or deny. The app itself can optionally tell you when Tor connects or drops while it is in the background; both switches are off by default, in Settings → Data → Notifications.</p>
+  </details>
+
+  <h2>AI Overview</h2>
+
+  <details>
+    <summary>What is the panel above the results?</summary>
+    <p>A summary of everything a search brought back, written on your phone. Results appear as soon as an engine answers — the summary fills in underneath and never delays them. Where several engines contribute, each gets its own short summary, with the pages it drew on listed as chips you can tap.</p>
+  </details>
+
+  <details>
+    <summary>It is taking a while</summary>
+    <p>Generating text on a phone takes seconds, not milliseconds, and older devices are slower. The rotating word tells you it is still working. Tap <strong>Stop</strong> at any time — the results themselves are already there and stay there. You can also switch the overview off entirely in Settings.</p>
+  </details>
+
+  <h2>The page assistant</h2>
+
+  <details>
+    <summary>The glowing button on a web page</summary>
+    <p>Tap it and the app reads the page before you ask anything: the text the site provides, and — if "Read the screen too" is on — a picture of what is currently on screen, analysed on your device for text, imagery and whether people are pictured. Then ask it anything about the page.</p>
+  </details>
+
+  <details>
+    <summary>Does the screenshot go anywhere?</summary>
+    <p>No. It is analysed on your device using Apple's Vision framework and discarded. It is never stored and never uploaded. You can turn the feature off in Settings → On-device AI.</p>
+  </details>
+
+  <h2>Using a cloud model instead</h2>
+
+  <details>
+    <summary>Connecting Gemini, ChatGPT, Claude and others</summary>
+    <p>Tap the pill at the bottom of the home screen, or Settings → the engine row. Choose Cloud, pick a provider, paste your API key and select a model. Your key is stored only on your device and is sent only to that provider.</p>
+    <p><strong>A connected service is the one thing in this browser that does not go through Tor.</strong> It is reached directly, because routing a streaming response through three relays is slow enough to be unusable — which means the provider sees your questions, the page text <em>and</em> your IP address. It is off by default and used only while you have it selected. Switch back to on-device and nothing leaves the phone at all.</p>
+  </details>
+
+  <details>
+    <summary>Connecting my own server</summary>
+    <p>Choose Custom and give it an address, an optional auth header, a request body containing <code>{prompt}</code>, and the path to the text inside each streamed chunk. The defaults describe an OpenAI-compatible server, which is what llama.cpp's own server speaks — so a model on your own machine usually needs little more than the URL.</p>
+  </details>
+
+  <details>
+    <summary>Can I use a different local model?</summary>
+    <p>Yes. In the engine picker, On device → Import a .gguf model. Anything llama.cpp can load will work, though larger models are slower and may not fit on older phones. A local model stays local, so it costs nothing in privacy.</p>
+  </details>
+
+  <h2>Troubleshooting</h2>
+
+  <details>
+    <summary>A page will not load</summary>
+    <p>First check the status pill — if Tor has dropped, nothing will load until it is back, and that is the browser working rather than failing. Otherwise try reload, then <strong>New circuit</strong>: a slow or blocked exit relay is the single most common cause, and a new route usually fixes it.</p>
+  </details>
+
+  <details>
+    <summary>A site says my connection is insecure, or blocks me</summary>
+    <p>Many sites treat Tor exit relays with suspicion and will show a CAPTCHA or refuse entirely. A new circuit gives you a different exit and often gets through. Some sites block Tor as a matter of policy and no amount of retrying will help.</p>
+  </details>
+
+  <details>
+    <summary>An answer stopped halfway</summary>
+    <p>Replies have a length limit that is smaller on devices with less memory. Ask a narrower question, or connect a cloud model for long-form answers.</p>
+  </details>
+
+  <details>
+    <summary>The app relaunched itself after I changed model</summary>
+    <p>Expected on devices with less memory. Two models cannot be held at once there, so the app restarts to swap cleanly rather than risk being terminated by the system.</p>
+  </details>
+
+  <details>
+    <summary>Opening links from other apps</summary>
+    <p>DarkDeepWeb registers <code>darkdeepweb://</code>, so another app can hand it a link to open privately — <code>darkdeepweb://open?url=…</code> or <code>darkdeepweb://search?q=…</code>. If Tor is not connected yet the link is held, not dropped, and opens as soon as circuits exist.</p>
+  </details>
+
+  <div class="contact">
+    <p style="margin:0 0 6px;color:var(--text);font-weight:650">Still stuck?</p>
+    <p style="margin:0">Email <a href="mailto:sivavimelrajhen@gmail.com">sivavimelrajhen@gmail.com</a> with your device model, iOS version, and what you were doing. If it is a connection problem, attach the Tor log (connect screen → Tor logs → share). There are no accounts, so there is nothing for us to look up — the more detail, the faster the answer.</p>
+  </div>
+
+  <footer>
+    Tor and the Onion Logo are registered trademarks of The Tor Project, Inc. This app is an
+    independent project, not produced by, endorsed by, or affiliated with The Tor Project, Inc.
+    · Built with Llama. Llama 3.2 is licensed under the Llama 3.2 Community License,
+    Copyright © Meta Platforms, Inc. All Rights Reserved.
+    · <a href="privacy.html">Privacy Policy</a>
+  </footer>
+</div>
+</body>
+</html>
